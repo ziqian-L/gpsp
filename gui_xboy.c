@@ -305,21 +305,21 @@ int32_t load_file(const char **wildcards, char *result)
         {
             if (all_cnt > 0)
             {
-                d0 = gui_settings.sel_rom_item - 4;
-                d1 = gui_settings.sel_rom_item + 4;
+                d0 = gui_settings.sel_rom_item - 5;
+                d1 = gui_settings.sel_rom_item + 5;
 
                 if (d0 < 0)
                 {
                     d0 = 0;
-                    d1 = 8;
+                    d1 = 10;
                 }
                 if (d1 >= all_cnt)
                 {
                     d0 = 0;
                     d1 = all_cnt - 1;
-                    if (all_cnt > 9)
+                    if (all_cnt > 11)
                     {
-                        d0 = all_cnt - 9;
+                        d0 = all_cnt - 11;
                     }
                 }
 
@@ -359,15 +359,15 @@ int32_t load_file(const char **wildcards, char *result)
                         if (gui_settings.sel_rom_item == cc)
                         {
                             rt.x = 0;
-                            rt.y = 4 + (21 * (cc - d0));
+                            rt.y = 0 + (22 * (cc - d0));
                             rt.w = 320;
                             rt.h = 20;
                             SDL_FillRect(screen, &rt, SDL_MapRGB(screen->format, 180, 0, 180));
                             sprintf(result, ROM_PATH "%s", ent->d_name);
                         }
 
-                        rt.x = 3;
-                        rt.y = 5 + (21 * (cc - d0));
+                        rt.x = 2;
+                        rt.y = 2 + (22 * (cc - d0));
                         msg = TTF_RenderUTF8_Solid(font_small, buf, col);
                         SDL_BlitSurface(msg, NULL, screen, &rt);
                         SDL_FreeSurface(msg);
@@ -379,12 +379,12 @@ int32_t load_file(const char **wildcards, char *result)
             else
             {
                 int w = 0, h = 0;
-                const char *err = "请将游戏放到 /roms/gba/ 目录";
+                const char *err = "请将游戏放到 /gba/ 目录";
                 SDL_Color col = {255, 255, 255};
 
                 TTF_SizeUTF8(font_small, err, &w, &h);
                 rt.x = (320 - w) / 2;
-                rt.y = 30 + ((240 - h) / 2);
+                rt.y = (240 - h) / 2;
                 msg = TTF_RenderUTF8_Solid(font_small, err, col);
                 SDL_BlitSurface(msg, NULL, screen, &rt);
                 SDL_FreeSurface(msg);
