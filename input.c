@@ -843,15 +843,14 @@ u32 update_input()
         {
             if (event.jbutton.button == 8)
             {
-                {
-                    video_resolution_large();
 
-                    u16 *screen_copy = copy_screen();
-                    u32 ret_val = menu(screen_copy);
-                    free(screen_copy);
+                video_resolution_large();
 
-                    return ret_val;
-                }
+                u16 *screen_copy = copy_screen();
+                u32 ret_val = menu(screen_copy);
+                free(screen_copy);
+
+                return ret_val;
             }
             key |= joy_map(event.jbutton.button);
             trigger_key(key);
@@ -864,42 +863,91 @@ u32 update_input()
         }
         case SDL_JOYHATMOTION:
         {
-            if (event.jhat.value == SDL_HAT_UP)
+            switch (event.jhat.value)
             {
+            case SDL_HAT_UP:
+            {
+                key &= ~(joy_map(10));
+                key &= ~(joy_map(11));
+                key &= ~(joy_map(12));
                 key |= joy_map(9);
                 trigger_key(key);
                 break;
             }
-            if (event.jhat.value == SDL_HAT_DOWN)
+            case SDL_HAT_DOWN:
             {
+                key &= ~(joy_map(9));
+                key &= ~(joy_map(11));
+                key &= ~(joy_map(12));
                 key |= joy_map(10);
                 trigger_key(key);
                 break;
             }
-            if (event.jhat.value == SDL_HAT_LEFT)
+            case SDL_HAT_LEFT:
             {
+                key &= ~(joy_map(9));
+                key &= ~(joy_map(10));
+                key &= ~(joy_map(12));
                 key |= joy_map(11);
                 trigger_key(key);
                 break;
             }
-            if (event.jhat.value == SDL_HAT_RIGHT)
+            case SDL_HAT_RIGHT:
             {
+                key &= ~(joy_map(9));
+                key &= ~(joy_map(10));
+                key &= ~(joy_map(11));
                 key |= joy_map(12);
                 trigger_key(key);
                 break;
             }
-            if (event.jhat.value == SDL_HAT_CENTERED)
+            case SDL_HAT_LEFTUP:
+            {
+                key &= ~(joy_map(10));
+                key &= ~(joy_map(12));
+                key |= joy_map(9);
+                key |= joy_map(11);
+                trigger_key(key);
+                break;
+            }
+            case SDL_HAT_LEFTDOWN:
             {
                 key &= ~(joy_map(9));
+                key &= ~(joy_map(12));
+                key |= joy_map(10);
+                key |= joy_map(11);
                 trigger_key(key);
+                break;
+            }
+            case SDL_HAT_RIGHTUP:
+            {
                 key &= ~(joy_map(10));
-                trigger_key(key);
                 key &= ~(joy_map(11));
+                key |= joy_map(9);
+                key |= joy_map(12);
                 trigger_key(key);
+                break;
+            }
+            case SDL_HAT_RIGHTDOWN:
+            {
+                key &= ~(joy_map(9));
+                key &= ~(joy_map(11));
+                key |= joy_map(10);
+                key |= joy_map(12);
+                trigger_key(key);
+                break;
+            }
+            case SDL_HAT_CENTERED:
+            {
+                key &= ~(joy_map(9));
+                key &= ~(joy_map(10));
+                key &= ~(joy_map(11));
                 key &= ~(joy_map(12));
                 trigger_key(key);
                 break;
             }
+            }
+            break;
         }
         case SDL_KEYDOWN:
         {
